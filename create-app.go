@@ -21,7 +21,6 @@ import (
 	"gopkg.in/src-d/go-billy.v4/memfs"
 	"gopkg.in/src-d/go-git.v4"
 	"gopkg.in/src-d/go-git.v4/config"
-	gitHttp "gopkg.in/src-d/go-git.v4/plumbing/transport/http"
 	"gopkg.in/src-d/go-git.v4/storage/memory"
 )
 
@@ -223,32 +222,13 @@ func main() {
 			return
 		}
 
-		fmt.Println("Files added to Git index.")
-
-		// commitMsg := "Initial commit"
-		// wt.AddGlob(answers.Directory)
-		// commit, err := wt.Commit(commitMsg, &git.CommitOptions{
-		// 	Author: &object.Signature{
-		// 		Name:  "Create-App",
-		// 		Email: "konixy.p@gmail.com",
-		// 	},
-		// })
-		// if err != nil {
-		// 	fmt.Println("Error committing changes:", err)
-		// 	os.Exit(1)
-		// }
-
-		// Push the changes to the remote repository
-		err = r.Push(&git.PushOptions{
-			RemoteName: "origin",
-			Auth: &gitHttp.BasicAuth{
-				Username: "Create-App",
-				Password: githubToken,
-			},
-		})
+		pushCmd := exec.Command("git", "push")
+		pushCmd.Dir = answers.Directory
+		pushCmdOutput, err := pushCmd.CombinedOutput()
 		if err != nil {
-			fmt.Println("Error pushing changes:", err)
-			os.Exit(1)
+			fmt.Println("Error pushing files to GitHub:", err)
+			fmt.Println(string(pushCmdOutput))
+			return
 		}
 
 		// fmt.Printf("Commit id: %s", commit.String())
