@@ -222,7 +222,7 @@ func main() {
 			return
 		}
 
-		pushCmd := exec.Command("git", "push")
+		pushCmd := exec.Command("git", "push", "--set-upstream", "origin", "master")
 		pushCmd.Dir = answers.Directory
 		pushCmdOutput, err := pushCmd.CombinedOutput()
 		if err != nil {
