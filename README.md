@@ -16,6 +16,8 @@ There is two ways to install the create-app command in Windows 10 or later :
 
 - Download and run [this file](https://raw.githubusercontent.com/Konixy/create-app/master/bin/install.exe)
 
+or
+
 - Run the following commands in your terminal:
   
 ```powershell
